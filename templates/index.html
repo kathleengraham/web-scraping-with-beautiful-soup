@@ -10,14 +10,40 @@
 </head>
 
 <body style="background-color:black; font-family: 'Press Start 2P', cursive;">
-    <div class="container-fluid" style="background-color:black;">
+    
+    <!-- CONTAINER-->
+    <div class="container" style="background-color:black;">
 
-        <!-- jumbotron -->
-        <div class="jumbotron jumbotron-fluid text-center" style="background-color:black;">
-            <h1 class="display-4" style="color:antiquewhite">Mission to Mars</h1>
-            <a class="btn btn-primary btn-lg" href="/scrape" role="button" style="background-color:antiquewhite; color:red; outline: none; border: none;">Scrape New Data</a>
+        <!-- JUMBOTRON --><!--another option for background that I like: url(http://www.4usky.com/data/out/58/164512304-mars-wallpapers.jpg) -->
+        <div class="jumbotron text-center" style="background-image: url(https://wpmisc.com/sites/default/files/wallpaper/space/73205/mars-hd-wallpapers-73205-5287998.png); background-size: 100%; height: 100%;">
+            <h1 class="display-4" style="color:white">Mission to Mars</h1>
+            <a class="btn btn-primary btn-lg" href="/scrape" role="button" style="background-color:#DB570E; color:white; outline: none; border: none;">Scrape New Data</a>
         </div>
 
+        <!--TOP: NASA MARS NEWS-->
+        <div class="container">
+            <div class="row">
+                <h2>Latest Mars News from NASA</h2>
+                <h4>{{ mars_info.news_title }}</h4>
+                <p>{{ mars_info.news_p }}</p>
+            </div>
+        </div>
+
+        <!--MIDDLE: FEATURED IMAGE, LATEST WEATHER TWEET, and FACTS TABLE-->
+        
+        
+        
+        
+        
+        
+        <!--BOTTOM: HEMISPHERE IMAGES -->
+        
+
+
+
+
+
+    <!--CLOSE OUTER CONTAINER-->
     </div>
 
     <!-- three bootstrap scripts here -->
