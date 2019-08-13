@@ -15,10 +15,11 @@ Scrape the following websites with Jupyter Notebooks first and then with Flask a
 ## Initial Scraping
 
 The initial scraping of five websites was done using:
-* Python Jupyter Notebook.
-* pandas.
-* Beautiful Soup.
-* Splinter.
+* Jupyter Notebook 4.4.0
+* Python 3.7.4
+* pandas 0.25.0
+* Beautiful Soup 4.8.0
+* Splinter 0.10.0
 
 
 ### Set Up
@@ -30,19 +31,23 @@ from bs4 import BeautifulSoup as bs
 from splinter import Browser
 ```
 
+Jupyter Notebook worked better when initializing the browser one time before all scraping and quitting the browser after the final scrape.
+
+```python
+# initialize browser
+executable_path = {'executable_path': '../chromedriver'}
+browser = Browser('chrome', **executable_path, headless=False)
+```
+
 ### NASA Mars News
 
 ```python
 # scrape latest news article title and headline
 
-# initialize browser
-executable_path = {'executable_path': '../chromedriver'}
-browser = Browser('chrome', **executable_path, headless=False)
-
 # store full url
 news_url = 'https://mars.nasa.gov/news/?page=0&per_page=40&order=publish_date+desc%2Ccreated_at+desc&search=&category=19%2C165%2C184%2C204&blank_scope=Latest'
 
-# visit site
+# visit mars news website
 browser.visit(news_url)
 
 # parse through html
@@ -51,9 +56,6 @@ news_soup = bs(browser.html, 'html.parser')
 # store title and headline
 news_title = news_soup.find_all('div', class_='content_title')[0].text
 news_p = news_soup.find_all('div', class_='article_teaser_body')[0].text
-
-# close browser
-browser.quit()
 
 # print title and headline
 print(news_title)
@@ -67,10 +69,6 @@ print(news_p)
 
 ```python
 # scrape featured_image_url
-
-# initialize browser
-executable_path = {'executable_path': '../chromedriver'}
-browser = Browser('chrome', **executable_path, headless=False)
 
 # store full and base urls
 image_url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
@@ -91,9 +89,6 @@ img = image_soup.find('img', class_='fancybox-image')['src']
 # combine base url with partial url
 featured_image_url = image_base_url + img
 
-# close browser
-browser.quit()
-
 # print url
 featured_image_url
 ```
@@ -107,10 +102,6 @@ featured_image_url
 ```python
 # scrape latest weather tweet
 
-# initialize browser
-executable_path = {'executable_path': '../chromedriver'}
-browser = Browser('chrome', **executable_path, headless=False)
-
 # store full and base urls
 weather_url = 'https://twitter.com/marswxreport?lang=en'
 
@@ -122,9 +113,6 @@ weather_soup = bs(browser.html, 'html.parser')
 
 # store latest tweet
 latest_weather_tweet = weather_soup.find('p', class_='TweetTextSize').text
-
-# close browser
-browser.quit()
 
 # print latest tweet
 latest_weather_tweet
@@ -138,10 +126,6 @@ Latest Mars Weather Tweet: 'InSight sol 250 (2019-08-10) low -100.0ºC (-148.1º
 
 ```python
 # scrape table with facts about mars
-
-# initialize browser
-executable_path = {'executable_path': '../chromedriver'}
-browser = Browser('chrome', **executable_path, headless=False)
 
 # store full url
 facts_url = 'https://space-facts.com/mars/'
@@ -159,9 +143,6 @@ mars_table = mars_table.rename(columns=facts_mapping)
 # saving as html table format
 mars_table.to_html('mars_table.html', index=False)
 
-# close browser
-browser.quit()
-
 # print data frame
 print(mars_table)
 ```
@@ -174,15 +155,11 @@ print(mars_table)
 ```python
 # scrape hemisphere images
 
-# initialize browser
-executable_path = {'executable_path': '../chromedriver'}
-browser = Browser('chrome', **executable_path, headless=False)
-
 # store full and base urls
 astro_url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
 astro_base_url = "https://astrogeology.usgs.gov"
 
-# visit url
+# visit hemispheres website
 browser.visit(astro_url)
 astro_soup = bs(browser.html, 'html.parser')
 
@@ -218,8 +195,7 @@ Featured Hemisphere List: [{'title': 'Cerberus Hemisphere Enhanced', 'img_url': 
 
 ## Python Scraping with Flask and MongoDB
 
-The next scraping of the same five websites was done using:
-* Python
+Next, scraping of the same five websites was done with a Python file and the following:
 * pandas
 * Beautiful Soup
 * Splinter
