@@ -15,6 +15,7 @@ def init_browser():
 mars_info = {}
 
 
+
 ############################## NASA MARS NEWS ##############################
 def scrape_mars_nasa_news():
     try: 
@@ -44,6 +45,8 @@ def scrape_mars_nasa_news():
     finally:
         # close browser
         browser.quit()
+
+
 
 ################## JPL MARS SPACE IMAGES - FEATURED IMAGE ##################
 def scrape_mars_featured_image():
@@ -80,6 +83,8 @@ def scrape_mars_featured_image():
         # close browser
         browser.quit()
 
+
+
 ############################### MARS WEATHER ###############################
 def scrape_mars_weather_tweet():
     try:
@@ -108,6 +113,8 @@ def scrape_mars_weather_tweet():
         # close browser
         browser.quit()
 
+
+
 ################################ MARS FACTS ################################
 def scrape_mars_facts_table():
 
@@ -133,5 +140,54 @@ def scrape_mars_facts_table():
     # return results
     return mars_info
 
-############################# MARS HEMISPHERES #############################
 
+
+############################# MARS HEMISPHERES #############################
+def scrape_mars_hemispheres():
+    try:
+        # initial browser
+        browser = init_browser()
+        
+        # store full and base urls
+        astro_url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
+        astro_base_url = "https://astrogeology.usgs.gov"
+
+        # visit url
+        browser.visit(astro_url)
+        astro_soup = bs(browser.html, 'html.parser')
+
+        # creating empty lists to append scraped data
+        hemi_image_list = []
+        title_list = []
+        url_list = []
+
+        # loop through links and avoid two links that are the same
+        div_list = astro_soup.find_all('a', class_='itemLink')
+        for link in div_list:
+            image_url = link.get('href')
+            if image_url not in hemi_image_list:
+                hemi_image_list.append(image_url)
+                browser.visit(astro_base_url + image_url)
+                title_list.append(browser.find_by_tag('h2').text)
+                browser.find_link_by_text('Sample').click()
+                
+        for i in range(4,0,-1):
+            url_list.append(browser.windows[i].url)
+            
+        # create list of hemisphere titles and hemisphere urls in dictionaries
+        featured_hemisphere_list = [
+            {'title': title_list[0], 'img_url': url_list[0]},
+            {'title': title_list[1], 'img_url': url_list[1]},
+            {'title': title_list[2], 'img_url': url_list[2]},
+            {'title': title_list[3], 'img_url': url_list[3]}
+            ]
+
+        # add info to dictionary
+        mars_info['mars_hemispheres'] = featured_hemisphere_list
+
+        # return results
+        return mars_info
+    
+    finally:
+        # close browser
+        browser.quit()

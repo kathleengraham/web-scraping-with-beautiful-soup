@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
-<body style="background-color:black; font-family: 'Press Start 2P', cursive;">
+<body style="background-color:black; color:white; font-family: 'Press Start 2P', cursive;">
 
     <!-- CONTAINER -->
     <div class="container" style="background-color:black;">
@@ -22,8 +22,8 @@
         <!-- TOP: NASA MARS NEWS -->
         <div class="container">
             <div class="row">
-                <h2>Latest Mars News from NASA</h2>
-                <h4>{{ mars_info.news_title }}</h4>
+                <h5>Latest Mars News from NASA</h5><br>
+                <h6>{{ mars_info.news_title }}</h6><br>
                 <p>{{ mars_info.news_p }}</p>
             </div>
         </div>
@@ -34,7 +34,7 @@
                 
                 <!-- FEATURED IMAGE IN FIRST COLUMN -->
                 <div class="col-md-8">
-                    <h2>Featured Image of Mars</h2>
+                    <h5>Featured Image of Mars</h5>
                     <img src="{{ mars_info.featured_image_url }}" style="max-width:100%; max-height: auto" alt="mars-featured-image">
                 </div>
                 
@@ -50,7 +50,7 @@
                     </div><br>
                     
                     <!-- FACTS TABLE -->
-                    <h3>Facts About Mars</h3>
+                    <h5>Facts About Mars</h5>
                     <div style="max-width: 450px; max-height:150px; font-size: 15px; margin-bottom: 50px;">
                         {{ mars_info.mars_facts_table }}
                     </div>
@@ -60,9 +60,21 @@
 
         </div>
 
-        <!--BOTTOM: HEMISPHERE IMAGES -->
-        <div>
-
+        <!--BOTTOM: HEMISPHERE IMAGES CARD DECK -->
+        <h5 style="padding-top: 50px; margin-top: 100px; text-align: center;">Mars Hemispheres</h5>
+        <div class="card-deck"><hr>
+            <div class="col">
+                <div class="row">
+                    {% for item in mars_info.featured_hemisphere_list %}
+                    <div class="col-md-6">
+                        <div class="card bg-dark" style="margin: 30px;">
+                            <img class="card-img-top" src="{{ item.img_url }}" />
+                            <div class="card-body"><p class="card-text">{{ item.title }}</p></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     
     </div> <!-- CONTAINER END -->
