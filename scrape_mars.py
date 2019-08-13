@@ -18,8 +18,7 @@ mars_info = {}
 ############################## NASA MARS NEWS ##############################
 def scrape_mars_news():
     try: 
-
-        # Initialize browser 
+        # initialize browser 
         browser = init_browser()
 
         # store full url
@@ -28,7 +27,7 @@ def scrape_mars_news():
         # visit site
         browser.visit(news_url)
 
-        # parse through html
+        # scrape page into soup
         news_soup = bs(browser.html, 'html.parser')
 
         # store title and headline
@@ -37,52 +36,15 @@ def scrape_mars_news():
         
         # return results
         return mars_info
-
     finally:
         # close browser
         browser.quit()
 
-
 ################## JPL MARS SPACE IMAGES - FEATURED IMAGE ##################
-
-
-
-
-
-
-
-
-
 
 ############################### MARS WEATHER ###############################
 
-
-
-
-
-
-
-
-
-
 ################################ MARS FACTS ################################
 
-
-
-
-
-
-
-
-
-
 ############################# MARS HEMISPHERES #############################
-
-
-
-
-
-
-
-
 
