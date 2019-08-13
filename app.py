@@ -1,6 +1,6 @@
 ############################## SET UP ##############################
 # dependencies
-from flask import Flask, render_template, redirec
+from flask import Flask, render_template, redirect
 import pymongo
 import scrape_mars
 

@@ -61,17 +61,14 @@ def scrape_mars_featured_image():
         # visit site
         browser.visit(image_url)
 
-        # click on 'full image' to open the image in full
-        browser.click_link_by_partial_text('FULL IMAGE')
-
-        # scrape page into soup
+        # parse through html
         image_soup = bs(browser.html, 'html.parser')
 
-        # store partial url
-        img = image_soup.find('img', class_='fancybox-image')['src']
+        # previous attempt to click FULL IMAGE was having hiccups so tried to parse through style content
+        partial_image_url  = image_soup.find('article')['style'].replace('background-image: url(','').replace(');', '')[1:-1]
 
-        # combine base url with partial url to get the featured_image_url
-        featured_image_url = image_base_url + img
+        # combine base url with partial url
+        featured_image_url = image_base_url + partial_image_url
 
         # add info to dictionary
         mars_info['featured_image_url'] = featured_image_url
@@ -187,7 +184,7 @@ def scrape_mars_hemispheres():
 
         # return results
         return mars_info
-    
+
     finally:
         # close browser
         browser.quit()
