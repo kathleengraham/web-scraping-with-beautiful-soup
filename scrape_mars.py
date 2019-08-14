@@ -6,22 +6,14 @@ from bs4 import BeautifulSoup as bs
 from splinter import Browser
 import requests 
 
-# initialize browser
-def init_browser(): 
-    executable_path = {'executable_path': '../chromedriver'}
-    browser = Browser('chrome', **executable_path, headless=False)
+executable_path = {'executable_path': '../chromedriver'}
+browser = Browser('chrome', **executable_path, headless=False)
 
 # empty dictionary for info to be added after each scrape
 mars_info = {}
 
-
-
 ############################## NASA MARS NEWS ##############################
 def scrape_mars_nasa_news():
-    try: 
-        # initialize browser 
-        browser = init_browser()
-
         # store full url
         news_url = 'https://mars.nasa.gov/news/?page=0&per_page=40&order=publish_date+desc%2Ccreated_at+desc&search=&category=19%2C165%2C184%2C204&blank_scope=Latest'
 
@@ -42,18 +34,10 @@ def scrape_mars_nasa_news():
         # return results
         return mars_info
 
-    finally:
-        # close browser
-        browser.quit()
-
 
 
 ################## JPL MARS SPACE IMAGES - FEATURED IMAGE ##################
 def scrape_mars_featured_image():
-    try:
-        # initial browser
-        browser = init_browser()
-
         # store full and base urls
         image_url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
         image_base_url = 'https://www.jpl.nasa.gov'
@@ -76,18 +60,10 @@ def scrape_mars_featured_image():
         # return results
         return mars_info
 
-    finally:
-        # close browser
-        browser.quit()
-
 
 
 ############################### MARS WEATHER ###############################
 def scrape_mars_weather_tweet():
-    try:
-        # initial browser
-        browser = init_browser()
-
         # store full and base urls
         weather_url = 'https://twitter.com/marswxreport?lang=en'
 
@@ -106,15 +82,10 @@ def scrape_mars_weather_tweet():
         # return results
         return mars_info
 
-    finally:
-        # close browser
-        browser.quit()
-
 
 
 ################################ MARS FACTS ################################
 def scrape_mars_facts_table():
-
     # store full url
     facts_url = 'https://space-facts.com/mars/'
 
@@ -140,11 +111,7 @@ def scrape_mars_facts_table():
 
 
 ############################# MARS HEMISPHERES #############################
-def scrape_mars_hemispheres():
-    try:
-        # initial browser
-        browser = init_browser()
-        
+def scrape_mars_hemispheres():        
         # store full and base urls
         astro_url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
         astro_base_url = "https://astrogeology.usgs.gov"
@@ -182,9 +149,7 @@ def scrape_mars_hemispheres():
         # add info to dictionary
         mars_info['mars_hemispheres'] = featured_hemisphere_list
 
+        browser.quit()
+
         # return results
         return mars_info
-
-    finally:
-        # close browser
-        browser.quit()

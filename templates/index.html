@@ -23,8 +23,8 @@
         <div class="container">
             <div class="row">
                 <h5>Latest Mars News from NASA</h5><br>
-                <h6>{{ mars_info.news_title }}</h6><br>
-                <p>{{ mars_info.news_p }}</p>
+                <h6>{{ mars.news_title }}</h6><br>
+                <p>{{ mars.news_p }}</p>
             </div>
         </div>
         
@@ -35,7 +35,7 @@
                 <!-- FEATURED IMAGE IN FIRST COLUMN -->
                 <div class="col-md-8">
                     <h5>Featured Image of Mars</h5>
-                    <img src="{{ mars_info.featured_image_url }}" style="max-width:100%; max-height: auto" alt="mars-featured-image">
+                    <img src="{{ mars.featured_image_url }}" style="max-width:100%; max-height: auto" alt="mars-featured-image">
                 </div>
                 
                 <!-- WEATHER TWEET AND FACTS TABLE IN SECOND COLUMN -->
@@ -45,14 +45,14 @@
                     <div class="card" style="width: 20rem;">
                         <div class="card-body bg-dark">
                             <h5 class="card-title">Current Weather on Mars</h5>
-                            <p class="card-text">{{ mars_info.latest_weather_tweet }}</p>
+                            <p class="card-text">{{ mars.latest_weather_tweet }}</p>
                         </div>
                     </div><br>
                     
                     <!-- FACTS TABLE -->
                     <h5>Facts About Mars</h5>
                     <div style="max-width: 450px; max-height:150px; font-size: 15px; margin-bottom: 50px;">
-                        {{ mars_info.mars_facts_table }}
+                        {{ mars.mars_facts_table }}
                     </div>
                 </div>
 
@@ -65,7 +65,7 @@
         <div class="card-deck"><hr>
             <div class="col">
                 <div class="row">
-                    {% for item in mars_info.featured_hemisphere_list %}
+                    {% for item in mars.featured_hemisphere_list %}
                     <div class="col-md-6">
                         <div class="card bg-dark" style="margin: 30px;">
                             <img class="card-img-top" src="{{ item.img_url }}" />
