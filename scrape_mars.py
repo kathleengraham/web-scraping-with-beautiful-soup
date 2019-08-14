@@ -95,17 +95,14 @@ def scrape_mars_facts_table():
     facts_url = 'https://space-facts.com/mars/'
 
     # reading html into a dataframe
-    facts_table = pd.read_html(facts_url)
-
-    # store only mars facts
-    mars_table = facts_table[1]
+    facts_table = pd.read_html(facts_url)[1]
 
     # renaming columns
     facts_mapping = {0:'Description', 1:'Value'}
-    mars_table = mars_table.rename(columns=facts_mapping)
+    mars_table = facts_table.rename(columns=facts_mapping).rename(index='Description')
 
     # return results
-    return mars_table.to_html('mars_table.html', index=False)
+    return mars_table.to_html(classes="table table-striped table-dark")
 
 
 
