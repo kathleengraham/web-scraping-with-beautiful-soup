@@ -22,8 +22,11 @@ def scrape():
         "facts": scrape_mars_facts_table(),
         "hemispheres": scrape_mars_hemispheres()
     }
-
+    
+    # close browser
     browser.quit()
+
+    # put all info into dictionary
     return mars_info
 
 
