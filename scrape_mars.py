@@ -9,8 +9,23 @@ import requests
 executable_path = {'executable_path': '../chromedriver'}
 browser = Browser('chrome', **executable_path, headless=False)
 
-# empty dictionary for info to be added after each scrape
-mars_info = {}
+
+############################### MAIN SCRAPE ###############################
+def scrape():
+    news_title, news_p = scrape_mars_nasa_news()
+    
+    mars_info = {
+        "news_title": news_title,
+        "news_p": news_p,
+        "image": scrape_mars_featured_image(),
+        "weather": scrape_mars_weather_tweet(),
+        "facts": scrape_mars_facts_table(),
+        "hemispheres": scrape_mars_hemispheres()
+    }
+
+    browser.quit()
+    return mars_info
+
 
 ############################## NASA MARS NEWS ##############################
 def scrape_mars_nasa_news():
@@ -27,12 +42,8 @@ def scrape_mars_nasa_news():
         news_title = news_soup.find_all('div', class_='content_title')[0].text
         news_p = news_soup.find_all('div', class_='article_teaser_body')[0].text
 
-        # add info to dictionary
-        mars_info['news_title'] = news_title
-        mars_info['news_p'] = news_p
-
         # return results
-        return mars_info
+        return news_title, news_p
 
 
 
@@ -54,11 +65,8 @@ def scrape_mars_featured_image():
         # combine base url with partial url
         featured_image_url = image_base_url + partial_image_url
 
-        # add info to dictionary
-        mars_info['featured_image_url'] = featured_image_url
-
         # return results
-        return mars_info
+        return featured_image_url
 
 
 
@@ -76,11 +84,8 @@ def scrape_mars_weather_tweet():
         # store latest tweet
         latest_weather_tweet = weather_soup.find('p', class_='TweetTextSize').text
 
-        # add info to dictionary
-        mars_info['latest_weather_tweet'] = latest_weather_tweet
-
         # return results
-        return mars_info
+        return latest_weather_tweet
 
 
 
@@ -99,14 +104,8 @@ def scrape_mars_facts_table():
     facts_mapping = {0:'Description', 1:'Value'}
     mars_table = mars_table.rename(columns=facts_mapping)
 
-    # saving as html table format
-    mars_facts_table = mars_table.to_html('mars_table.html', index=False)
-
-    # add info to dictionary
-    mars_info['mars_facts_table'] = mars_facts_table
-
     # return results
-    return mars_info
+    return mars_table.to_html('mars_table.html', index=False)
 
 
 
@@ -146,10 +145,8 @@ def scrape_mars_hemispheres():
             {'title': title_list[3], 'img_url': url_list[3]}
             ]
 
-        # add info to dictionary
-        mars_info['mars_hemispheres'] = featured_hemisphere_list
-
+        # close browser
         browser.quit()
 
         # return results
-        return mars_info
+        return featured_hemisphere_list

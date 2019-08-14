@@ -23,11 +23,7 @@ def index():
 @app.route("/scrape")
 def scrape():
     mars = client.db.mars
-    mars_scraping = scrape_mars.scrape_mars_nasa_news()
-    mars_scraping = scrape_mars.scrape_mars_featured_image()
-    mars_scraping = scrape_mars.scrape_mars_weather_tweet()
-    mars_scraping = scrape_mars.scrape_mars_facts_table()
-    mars_scraping = scrape_mars.scrape_mars_hemispheres()
+    mars_scraping = scrape_mars.scrape()
     mars.update({}, mars_scraping, upsert=True)
     return redirect("/", code=302)
 
